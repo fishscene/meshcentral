@@ -40,7 +40,7 @@ trap 'cleanup' SIGINT
   apt-get update && apt-get upgrade -y
   apt-get install nodejs -y
   apt-get install npm -y
-  apt-get install mongodb-org-tools
+  apt-get install mongodb-org-tools -y
   
   rm -rf /var/log/mongodb/mongod.log ##Sometimes this exists on first startup?. If it does, it actively interferes with Mongo's ability to start the first time. 
   mkdir /var/lib/mongo ##Mongo DB directory.
