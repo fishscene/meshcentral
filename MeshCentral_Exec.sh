@@ -35,17 +35,17 @@ trap 'cleanup' SIGINT
 
 
 ##Mongodb setup.
-#if [ ! -f /meshcentral-data/firstrun.txt ]; then
+if [ ! -f /meshcentral-data/firstrun.txt ]; then
   printf "\n\n First run detected. Installing newest versions of dependencies.\n\n"
   apt-get update && apt-get upgrade -y
   apt-get install nodejs -y
   apt-get install npm -y
-  apt-get install mongodb-org-tools -y
+  #apt-get install mongodb-org-tools -y
   
   rm -rf /var/log/mongodb/mongod.log ##Sometimes this exists on first startup?. If it does, it actively interferes with Mongo's ability to start the first time. 
   mkdir /var/lib/mongo ##Mongo DB directory.
   apt-get install mongodb -y && rm -rf /var/log/mongodb/mongod.log
-#fi
+fi
 
 printf "\n Starting mongod\n"
 mongod --fork --dbpath /var/lib/mongo --logpath /var/log/mongodb/mongod.log &
