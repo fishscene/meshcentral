@@ -41,6 +41,7 @@ if [ ! -f /meshcentral-data/firstrun.txt ]; then
   apt-get install nodejs -y
   apt-get install npm -y
   #apt-get install mongodb-org-tools -y
+  npm install archiver@4.0.2 ## Resolves: ERROR: Unable to install required module "archiver@4.0.2". MeshCentral may not have access to npm, or npm may not have suffisent rights to load the new module.
   
   rm -rf /var/log/mongodb/mongod.log ##Sometimes this exists on first startup?. If it does, it actively interferes with Mongo's ability to start the first time. 
   mkdir /var/lib/mongo ##Mongo DB directory.
@@ -58,10 +59,7 @@ if [ ! -f /meshcentral-data/firstrun.txt ]; then
   printf "\n\n First run detected. Installing meshcentral and performing first run configuration.\n\n"
   npm install meshcentral
   apt-get install screen -y && screen -dm -S firstrun && screen -S firstrun -X stuff "node ./node_modules/meshcentral --cert $URL\n" && sleep 20 && killall -9 node && pkill screen && apt-get remove screen -y ## Install screen, run meshcentral once, close meshcentral, close screen, remove screen.
-  
-  cd "/"
-  npm install archiver@4.0.2 ## Resolves: ERROR: Unable to install required module "archiver@4.0.2". MeshCentral may not have access to npm, or npm may not have suffisent rights to load the new module.
-  
+
   touch /meshcentral-data/firstrun.txt
 fi
 
