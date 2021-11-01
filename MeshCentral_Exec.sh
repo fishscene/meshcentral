@@ -1,5 +1,5 @@
 #!/bin/bash
-version=2021.04.20
+version=2021.11.01
 #set -x
 pid=0
 mongoPid=0
