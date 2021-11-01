@@ -4,7 +4,40 @@ A self-contained MeshCentral, designed to run behind nginx-gui.
 
 Installs latest updates, MongoDB, and MeshCentral on first deployment of the container.
 
-  --MeshCentral Docker--
+--Quick Start--
+    
+    version: '3'
+
+    volumes:
+      meshcentral-data:
+      meshcentral-files:
+      meshcentral-database:
+      meshcentral-database-log:
+
+    services:
+        meshcentral:
+            restart: always
+            container_name: meshcentral
+        image: fishscene/meshcentral:latest
+        ports:
+            - 8170:800
+            - 8171:4430 ## This is the website port
+            - 8172:4433
+        environment:
+            - URL=test.mydomain.com    ## Externally-accessible hostname, no HTTP/HTTPS
+            - mongodbUrl=127.0.0.1:27017/meshcentral
+            - agentPong=300
+            - port=4430
+            - aliasPort=443
+            - redirPort=800
+            - TlsOffload=127.0.0.1 ## Doesn't actually do anything/Not implemented
+        volumes:
+            - meshcentral-data:/meshcentral-data        ## Data
+            - meshcentral-files:/meshcentral-files      ## Files for use within meshcentral
+            - meshcentral-database:/var/lib/mongo       ## Database
+            - meshcentral-database-log:/var/log/mongodb ## Database log files
+
+  --MeshCentral Docker Info--
 
   Environment Variables
 
