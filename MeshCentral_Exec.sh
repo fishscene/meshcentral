@@ -56,7 +56,7 @@ wait "$mongoPid"
 ##MeshCentral setup.
 if [ ! -f /meshcentral-data/firstrun.txt ]; then
   printf "\n\n First run detected. Installing meshcentral and performing first run configuration.\n\n"
-  npm install meshcentral
+  #npm install meshcentral
   #apt-get install screen -y && screen -dm -S firstrun && screen -S firstrun -X stuff "node ./node_modules/meshcentral --cert $URL\n" && sleep 20 && killall -9 node && pkill screen && apt-get remove screen -y ## Install screen, run meshcentral once, close meshcentral, close screen, remove screen.
   apt-get install screen -y && screen -dm -S firstrun && screen -S firstrun -X stuff "node node_modules/meshcentral --cert $URL\n" && sleep 20 && killall -9 node && pkill screen && apt-get remove screen -y ## Install screen, run meshcentral once, close meshcentral, close screen, remove screen.
   
