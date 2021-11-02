@@ -37,11 +37,11 @@ trap 'cleanup' SIGINT
 ##Mongodb setup.
 if [ ! -f /meshcentral-data/firstrun.txt ]; then
   printf "\n\n First run detected. Installing newest versions of dependencies.\n\n"
-  apt-get update #&& apt-get upgrade -y
+  #apt-get update && apt-get upgrade -y
   #apt-get install nodejs -y
   #apt-get install npm -y
   #apt-get install mongodb-org-tools -y
-  #npm install archiver@4.0.2 ## Resolves: ERROR: Unable to install required module "archiver@4.0.2". MeshCentral may not have access to npm, or npm may not have suffisent rights to load the new module.
+  #npm install -g archiver@4.0.2 ## Resolves: ERROR: Unable to install required module "archiver@4.0.2". MeshCentral may not have access to npm, or npm may not have suffisent rights to load the new module.
   
   rm -rf /var/log/mongodb/mongod.log ##Sometimes this exists on first startup?. If it does, it actively interferes with Mongo's ability to start the first time. 
   mkdir /var/lib/mongo ##Mongo DB directory.
@@ -58,8 +58,9 @@ wait "$mongoPid"
 if [ ! -f /meshcentral-data/firstrun.txt ]; then
   printf "\n\n First run detected. Installing meshcentral and performing first run configuration.\n\n"
   npm install meshcentral
-  apt-get install screen -y && screen -dm -S firstrun && screen -S firstrun -X stuff "node ./node_modules/meshcentral --cert $URL\n" && sleep 20 && killall -9 node && pkill screen && apt-get remove screen -y ## Install screen, run meshcentral once, close meshcentral, close screen, remove screen.
-
+  #apt-get install screen -y && screen -dm -S firstrun && screen -S firstrun -X stuff "node ./node_modules/meshcentral --cert $URL\n" && sleep 20 && killall -9 node && pkill screen && apt-get remove screen -y ## Install screen, run meshcentral once, close meshcentral, close screen, remove screen.
+  apt-get install screen -y && screen -dm -S firstrun && screen -S firstrun -X stuff "node node_modules/meshcentral --cert $URL\n" && sleep 20 && killall -9 node && pkill screen && apt-get remove screen -y ## Install screen, run meshcentral once, close meshcentral, close screen, remove screen.
+  
   touch /meshcentral-data/firstrun.txt
 fi
 
@@ -76,7 +77,8 @@ sed -i "s|\"_title2\": \"Servername\",|&\n      \"certUrl\": \"https://$URL:$ali
 printf "\n Customizations complete.\n"
 
 printf "\n Starting MeshCentral\n"
-node ./node_modules/meshcentral &
+#node ./node_modules/meshcentral &
+node node_modules/meshcentral &
 pid="$!"
 printf "\n MeshCentral started, PID: $pid\n"
 wait "$pid"
