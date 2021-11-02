@@ -7,6 +7,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 run apt-get update -y && apt-get upgrade -y && apt-get install -y apt-utils
 run apt-get install nodejs -y
 run apt-get install npm -y
+run npm install meshcentral
 run npm install -g archiver@4.0.2
 run npm install -g otplib@10.2.3
 
