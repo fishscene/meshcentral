@@ -18,7 +18,7 @@ Installs latest updates, MongoDB, and MeshCentral on first deployment of the con
         meshcentral:
             restart: always
             container_name: meshcentral
-        image: fishscene/meshcentral:latest
+            image: fishscene/meshcentral:latest
         ports:
             - 8170:800
             - 8171:4430 ## This is the website port
