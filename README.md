@@ -15,27 +15,27 @@ Installs latest updates, MongoDB, and MeshCentral on first deployment of the con
       meshcentral-database-log:
 
     services:
-        meshcentral:
-            restart: always
-            container_name: meshcentral
-            image: fishscene/meshcentral:latest
+      meshcentral:
+        restart: always
+        container_name: meshcentral
+        image: fishscene/meshcentral:latest
         ports:
-            - 8170:800
-            - 8171:4430 ## This is the website port
-            - 8172:4433
+          - 8180:800
+          - 8181:4430 ## This is the website port
+          - 8182:4433
         environment:
-            - URL=test.mydomain.com    ## Externally-accessible hostname, no HTTP/HTTPS
-            - mongodbUrl=127.0.0.1:27017/meshcentral
-            - agentPong=300
-            - port=4430
-            - aliasPort=443
-            - redirPort=800
-            - TlsOffload=127.0.0.1 ## Doesn't actually do anything/Not implemented
+          - URL=test.mydomain.com    ## Externally-accessible hostname, no HTTP/HTTPS
+          - mongodbUrl=127.0.0.1:27017/meshcentral ## In the future, I'll look in to building out a separate mongodb container.
+          - agentPong=300
+          - port=4430
+          - aliasPort=443
+          - redirPort=800
+          - TlsOffload=127.0.0.1 ## Doesn't actually do anything/Not implemented
         volumes:
-            - meshcentral-data:/meshcentral-data        ## Data
-            - meshcentral-files:/meshcentral-files      ## Files for use within meshcentral
-            - meshcentral-database:/var/lib/mongo       ## Database
-            - meshcentral-database-log:/var/log/mongodb ## Database log files
+          - meshcentral-data:/meshcentral-data        ## Data
+          - meshcentral-files:/meshcentral-files      ## Files for use within meshcentral
+          - meshcentral-database:/var/lib/mongo       ## Database
+          - meshcentral-database-log:/var/log/mongodb ## Database log files
 
   --MeshCentral Docker Info--
 
